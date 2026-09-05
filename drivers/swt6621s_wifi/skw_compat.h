@@ -113,6 +113,27 @@
 #define SKW_GFP_RETRIES 0
 #endif
 
+/* kmemdup_nul() was introduced in 4.3 */
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 3, 0)
+static inline void *skw_kmemdup_nul(const void *s, size_t len, gfp_t gfp)
+{
+	char *p;
+
+	if (!s)
+		return NULL;
+
+	p = kmalloc(len + 1, gfp);
+	if (!p)
+		return NULL;
+
+	memcpy(p, s, len);
+	p[len] = '\0';
+
+	return p;
+}
+#define kmemdup_nul(s, len, gfp) skw_kmemdup_nul(s, len, gfp)
+#endif
+
 #define skw_from_timer(var, callback_timer, timer_fieldname) \
 	container_of(callback_timer, typeof(*var), timer_fieldname)
 
