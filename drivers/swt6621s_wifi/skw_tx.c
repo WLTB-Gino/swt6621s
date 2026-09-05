@@ -1353,7 +1353,7 @@ struct skw_tx_vring *skw_tx_vring_init(struct skw_core *skw)
 		goto __1;
 	}
 
-	tx_vring->page = alloc_pages(GFP_KERNEL | GFP_DMA | __GFP_RETRY_MAYFAIL, get_order(SKW_TX_PACK_SIZE*SKW_TX_VRING_SIZE));
+	tx_vring->page = alloc_pages(GFP_KERNEL | GFP_DMA | SKW_GFP_RETRIES, get_order(SKW_TX_PACK_SIZE*SKW_TX_VRING_SIZE));
 	if (!tx_vring->page) {
 		skw_chip_err(skw->idx, "alloc page fail\n");
 		goto __2;

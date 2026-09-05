@@ -106,6 +106,13 @@
 #define SKW_PASSIVE_SCAN IEEE80211_CHAN_PASSIVE_SCAN
 #endif
 
+/* __GFP_RETRY_MAYFAIL was introduced in 4.12; older kernels just retry less */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
+#define SKW_GFP_RETRIES __GFP_RETRY_MAYFAIL
+#else
+#define SKW_GFP_RETRIES 0
+#endif
+
 #define skw_from_timer(var, callback_timer, timer_fieldname) \
 	container_of(callback_timer, typeof(*var), timer_fieldname)
 
