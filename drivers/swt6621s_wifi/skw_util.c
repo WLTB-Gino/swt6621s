@@ -16,7 +16,11 @@
  ******************************************************************************/
 
 #include <linux/kernel.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 11, 0)
 #include <linux/sched/clock.h>
+#else
+#include <linux/sched.h>
+#endif
 #include <linux/etherdevice.h>
 
 #include "skw_core.h"
